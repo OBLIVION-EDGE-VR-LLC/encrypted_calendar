@@ -8,6 +8,7 @@ import sys
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QCalendarWidget
+from Calendar.Model.MalWarePlanner import MalWarePlanner
 
 sys.path.insert(0, '../Controllers')
 sys.path.insert(1, '../Model')
@@ -26,32 +27,39 @@ class LandingPage(BaseView.BaseView):
         self.p2 = None
         self.initUI()
 
-
     def initUI(self):
-
         checkbox = QCheckBox('Show title', self)
         checkbox.move(20, 20)
         checkbox.toggle()
         self.components.append(checkbox)
-        #insertimage onto screen
+        # insertimage onto screen
 
         self.p = QPixmap(os.getcwd() + '/images/1337_Logo_small.png')
 
         self.setGeometry(300, 300, 250, 150)
-        self.setWindowTitle('StegoPop')
-        self.folderitems = QDockWidget("DockWidget 1", self)
+        self.setWindowTitle('bCalendar')
+        self.folderitems = QDockWidget("Secret 1", self)
         self.fileitems = QDockWidget("Top-Secret Scheduler", self)
-        self.folderButton = QDockWidget("DockWidget 3", self)
+        self.folderButton = QDockWidget("Mission Report", self)
 
-        self.dockWidget1 = QCalendarWidget()
+        self.dockWidget1 = MalWarePlanner()
         self.dockWidget2 = QTextEdit()
         self.dockWidget3 = QTextEdit()
         self.fileitems.setWidget(self.dockWidget1)
         self.fileitems.setFloating(False)
+        # disable closable and floatable feautres
+        self.folderitems.setFeatures(QDockWidget.DockWidgetMovable)
+        self.folderButton.setFeatures(QDockWidget.DockWidgetMovable)
+        self.fileitems.setFeatures(QDockWidget.DockWidgetMovable)
         # Set Style sheet here
         self.fileitems.setStyleSheet("""QDockWidget::title{ background-color: orange; text-align: 
         center;border-radius: 10px; } QDockWidget::title:hover{ background-color: red;} 
-        QCalendarWidget QAbstractItemView{ selection-color: green; selection-background-color: black} """)
+        QCalendarWidget QAbstractItemView{ selection-color: green; selection-background-color: black}""")
+
+        self.folderitems.setStyleSheet("""QDockWidget::title{ background-color: orange; text-align: 
+                center;border-radius: 10px; } QDockWidget::title:hover{ background-color: green;} """)
+        self.folderButton.setStyleSheet("""QDockWidget::title{ background-color: orange; text-align: 
+                center;border-radius: 10px; } QDockWidget::title:hover{ background-color: blue;} """)
 
         self.folderitems.setWidget(self.dockWidget2)
         self.folderitems.setFloating(False)
@@ -69,7 +77,6 @@ class LandingPage(BaseView.BaseView):
         center = QFrame(splitter1)
         center.setFrameShape(QFrame.StyledPanel)
 
-
         splitter2 = QSplitter(splitter1)
         sizePolicy = splitter2.sizePolicy()
         sizePolicy.setHorizontalStretch(1)
@@ -80,19 +87,19 @@ class LandingPage(BaseView.BaseView):
         top_right = QFrame(splitter2)
         top_right.setFrameShape(QFrame.StyledPanel)
         splitter2.addWidget(self.fileitems)
-        #splitter2.addWidget(logo)
+        # splitter2.addWidget(logo)
         bottom_right = QFrame(splitter2)
         bottom_right.setFrameShape(QFrame.StyledPanel)
         splitter2.addWidget(self.folderitems)
         splitter2.addWidget(self.folderButton)
-        splitter2.setGeometry(0,0,499,700)
+        splitter2.setGeometry(0, 0, 499, 700)
         hbox.addWidget(splitter1)
         hbox.addWidget(top_right)
         self.setGeometry(500, 500, 750, 750)
 
         pallete = QPalette()
         pallete.setColor(QPalette.Background, Qt.gray)
-        #pallete.setColor(QPalette.Background, Qt.green)
+        # pallete.setColor(QPalette.Background, Qt.green)
         self.setAutoFillBackground(True)
         self.setPalette(pallete)
 

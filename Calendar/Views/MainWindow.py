@@ -26,7 +26,7 @@ class MainWindow(QMainWindow):
 
         self.setGeometry(300, 300, 796, 650)
 
-        self.setWindowTitle('MVC Baseline Project')
+        self.setWindowTitle('b-Calendar')
         self.show()
 
 
