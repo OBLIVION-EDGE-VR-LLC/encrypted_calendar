@@ -20,7 +20,7 @@ class MainWindow(QMainWindow):
 
     def initUI(self):
         self.view = LandingPage.LandingPage()
-        self.view.initUI()
+        self.view.initUi()
         self.statusBar().showMessage('StatusBar:')
         self.setCentralWidget(self.view)
 

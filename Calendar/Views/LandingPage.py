@@ -8,7 +8,10 @@ import sys
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QCalendarWidget
+
+from Calendar.Controllers.OperationCalendarConnector import OperationCalendarConnector
 from Calendar.Model.MalWarePlanner import MalWarePlanner
+from Calendar.Model.Tools.Constants import STYLE_SHEET_CALENDAR
 
 sys.path.insert(0, '../Controllers')
 sys.path.insert(1, '../Model')
@@ -25,36 +28,52 @@ class LandingPage(BaseView.BaseView):
         self.components = []
         self.p = None
         self.p2 = None
-        self.initUI()
+        self.spliter2 = None
+        self.initUi()
 
-    def initUI(self):
+    def initUi(self):
         checkbox = QCheckBox('Show title', self)
         checkbox.move(20, 20)
         checkbox.toggle()
         self.components.append(checkbox)
-        # insertimage onto screen
 
-        self.p = QPixmap(os.getcwd() + '/images/1337_Logo_small.png')
+        splitter1 = QSplitter(self)
+        splitter1.setOrientation(Qt.Horizontal)
+
+        left = QFrame(splitter1)
+        left.setFrameShape(QFrame.StyledPanel)
+
+        center = QFrame(splitter1)
+        center.setFrameShape(QFrame.StyledPanel)
+
+        self.splitter2 = QSplitter(splitter1)
+        sizePolicy = self.splitter2.sizePolicy()
+        sizePolicy.setHorizontalStretch(1)
+
+        self.setSizePolicy(sizePolicy)
+        self.splitter2.setOrientation(Qt.Vertical)
 
         self.setGeometry(300, 300, 250, 150)
         self.setWindowTitle('bCalendar')
         self.folderitems = QDockWidget("Secret 1", self)
         self.fileitems = QDockWidget("Top-Secret Scheduler", self)
         self.folderButton = QDockWidget("Mission Report", self)
-
-        self.dockWidget1 = MalWarePlanner()
+        controller_planner = OperationCalendarConnector(self)
+        self.dockWidget1 = controller_planner.OperationPlanner
         self.dockWidget2 = QTextEdit()
         self.dockWidget3 = QTextEdit()
         self.fileitems.setWidget(self.dockWidget1)
         self.fileitems.setFloating(False)
+
+
+
         # disable closable and floatable feautres
         self.folderitems.setFeatures(QDockWidget.DockWidgetMovable)
         self.folderButton.setFeatures(QDockWidget.DockWidgetMovable)
         self.fileitems.setFeatures(QDockWidget.DockWidgetMovable)
+
         # Set Style sheet here
-        self.fileitems.setStyleSheet("""QDockWidget::title{ background-color: orange; text-align: 
-        center;border-radius: 10px; } QDockWidget::title:hover{ background-color: red;} 
-        QCalendarWidget QAbstractItemView{ selection-color: green; selection-background-color: black}""")
+        self.fileitems.setStyleSheet(STYLE_SHEET_CALENDAR)
 
         self.folderitems.setStyleSheet("""QDockWidget::title{ background-color: orange; text-align: 
                 center;border-radius: 10px; } QDockWidget::title:hover{ background-color: green;} """)
@@ -68,38 +87,23 @@ class LandingPage(BaseView.BaseView):
 
         hbox = QHBoxLayout(self)
 
-        splitter1 = QSplitter(self)
-        splitter1.setOrientation(Qt.Horizontal)
 
-        left = QFrame(splitter1)
-        left.setFrameShape(QFrame.StyledPanel)
 
-        center = QFrame(splitter1)
-        center.setFrameShape(QFrame.StyledPanel)
-
-        splitter2 = QSplitter(splitter1)
-        sizePolicy = splitter2.sizePolicy()
-        sizePolicy.setHorizontalStretch(1)
-
-        splitter2.setSizePolicy(sizePolicy)
-        splitter2.setOrientation(Qt.Vertical)
-
-        top_right = QFrame(splitter2)
+        top_right = QFrame(self.splitter2)
         top_right.setFrameShape(QFrame.StyledPanel)
-        splitter2.addWidget(self.fileitems)
-        # splitter2.addWidget(logo)
-        bottom_right = QFrame(splitter2)
+        self.splitter2.addWidget(self.fileitems)
+        bottom_right = QFrame(self.splitter2)
         bottom_right.setFrameShape(QFrame.StyledPanel)
-        splitter2.addWidget(self.folderitems)
-        splitter2.addWidget(self.folderButton)
-        splitter2.setGeometry(0, 0, 499, 700)
+        self.splitter2.addWidget(self.folderitems)
+        self.splitter2.addWidget(self.folderButton)
+        self.splitter2.setGeometry(0, 0, 499, 700)
         hbox.addWidget(splitter1)
         hbox.addWidget(top_right)
         self.setGeometry(500, 500, 750, 750)
 
         pallete = QPalette()
         pallete.setColor(QPalette.Background, Qt.gray)
-        # pallete.setColor(QPalette.Background, Qt.green)
+
         self.setAutoFillBackground(True)
         self.setPalette(pallete)
 
