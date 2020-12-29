@@ -14,9 +14,9 @@ class OperationCalendarConnector(BaseController):
         ##################
         self.OperationPlanner = MalWarePlanner(view)
         self.OperationPlanner.event_list = QListWidget(parent=view.splitter2)
-        self.OperationPlanner.event_title = QLineEdit(parent=view.splitter2)
+        self.OperationPlanner.event_title = QLineEdit("Operation Title", parent=view.splitter2)
         self.OperationPlanner.event_category = QComboBox(parent=view.splitter2)
-        self.OperationPlanner.event_time = QTimeEdit(QTime(8, 0))
+        self.OperationPlanner.event_time = QTimeEdit(QTime(8, 0), parent=view.splitter2)
         self.OperationPlanner.allday_check = QCheckBox('All Day', parent=view.splitter2)
         self.OperationPlanner.event_detail = QTextEdit("Event Detail", parent=view.splitter2)
         self.OperationPlanner.add_button = QPushButton('Add/Update', parent=view.splitter2)

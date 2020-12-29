@@ -37,16 +37,16 @@ class LandingPage(BaseView.BaseView):
         checkbox.toggle()
         self.components.append(checkbox)
 
-        splitter1 = QSplitter(self)
-        splitter1.setOrientation(Qt.Horizontal)
+        self.splitter1 = QSplitter(self)
+        self.splitter1.setOrientation(Qt.Horizontal)
 
-        left = QFrame(splitter1)
+        left = QFrame(self.splitter1)
         left.setFrameShape(QFrame.StyledPanel)
 
-        center = QFrame(splitter1)
+        center = QFrame(self.splitter1)
         center.setFrameShape(QFrame.StyledPanel)
 
-        self.splitter2 = QSplitter(splitter1)
+        self.splitter2 = QSplitter(self.splitter1)
         sizePolicy = self.splitter2.sizePolicy()
         sizePolicy.setHorizontalStretch(1)
 
@@ -97,7 +97,7 @@ class LandingPage(BaseView.BaseView):
         self.splitter2.addWidget(self.folderitems)
         self.splitter2.addWidget(self.folderButton)
         self.splitter2.setGeometry(0, 0, 499, 700)
-        hbox.addWidget(splitter1)
+        hbox.addWidget(self.splitter1)
         hbox.addWidget(top_right)
         self.setGeometry(500, 500, 750, 750)
 
