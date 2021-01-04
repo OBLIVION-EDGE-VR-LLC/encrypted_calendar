@@ -12,7 +12,7 @@ class OperationCalendarConnector(BaseController):
         ##################
         # Connect Events #
         ##################
-        self.OperationPlanner = MalWarePlanner(view)
+        self.OperationPlanner = MalWarePlanner(parent=view)
         self.OperationPlanner.event_list = QListWidget(parent=view.splitter2)
         self.OperationPlanner.event_title = QLineEdit("Operation Title", parent=view.splitter2)
         self.OperationPlanner.event_category = QComboBox(parent=view.splitter2)
