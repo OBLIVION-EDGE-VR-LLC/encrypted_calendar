@@ -54,9 +54,9 @@ class LandingPage(BaseView.BaseView):
         self.splitter2.setOrientation(Qt.Vertical)
 
         self.setGeometry(300, 300, 250, 150)
-        self.setWindowTitle('bCalendar')
-        self.folderitems = QDockWidget("Secret 1", self)
-        self.fileitems = QDockWidget("Top-Secret Scheduler", self)
+        self.setWindowTitle('RAM Calendar')
+        self.folderitems = QDockWidget("Secret Schedule", self)
+        self.fileitems = QDockWidget("Schedule Maker", self)
         self.folderButton = QDockWidget("Mission Report", self)
         controller_planner = OperationCalendarConnector(self)
         self.dockWidget1 = controller_planner.OperationPlanner
@@ -99,7 +99,7 @@ class LandingPage(BaseView.BaseView):
         self.splitter2.setGeometry(0, 0, 499, 700)
         hbox.addWidget(self.splitter1)
         hbox.addWidget(top_right)
-        self.setGeometry(500, 500, 750, 750)
+        self.setGeometry(500, 500, 750, 750) # 500, 500, 750,750
 
         pallete = QPalette()
         pallete.setColor(QPalette.Background, Qt.gray)
