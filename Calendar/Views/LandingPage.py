@@ -32,19 +32,9 @@ class LandingPage(BaseView.BaseView):
         self.initUi()
 
     def initUi(self):
-        checkbox = QCheckBox('Show title', self)
-        checkbox.move(20, 20)
-        checkbox.toggle()
-        self.components.append(checkbox)
 
         self.splitter1 = QSplitter(self)
         self.splitter1.setOrientation(Qt.Horizontal)
-
-        left = QFrame(self.splitter1)
-        left.setFrameShape(QFrame.StyledPanel)
-
-        center = QFrame(self.splitter1)
-        center.setFrameShape(QFrame.StyledPanel)
 
         self.splitter2 = QSplitter(self.splitter1)
         sizePolicy = self.splitter2.sizePolicy()
@@ -54,9 +44,9 @@ class LandingPage(BaseView.BaseView):
         self.splitter2.setOrientation(Qt.Vertical)
 
         self.setGeometry(300, 300, 250, 150)
-        self.setWindowTitle('bCalendar')
-        self.folderitems = QDockWidget("Secret 1", self)
-        self.fileitems = QDockWidget("Top-Secret Scheduler", self)
+        self.setWindowTitle('RAM Calendar')
+        self.folderitems = QDockWidget("Secret Schedule", self)
+        self.fileitems = QDockWidget("Schedule Maker", self)
         self.folderButton = QDockWidget("Mission Report", self)
         controller_planner = OperationCalendarConnector(self)
         self.dockWidget1 = controller_planner.OperationPlanner
@@ -78,7 +68,7 @@ class LandingPage(BaseView.BaseView):
         self.folderitems.setStyleSheet("""QDockWidget::title{ background-color: orange; text-align: 
                 center;border-radius: 10px; } QDockWidget::title:hover{ background-color: green;} """)
         self.folderButton.setStyleSheet("""QDockWidget::title{ background-color: orange; text-align: 
-                center;border-radius: 10px; } QDockWidget::title:hover{ background-color: blue;} """)
+                center;border-radius: 10px; } QDockWidget::title:hover{ background-color: red;} """)
 
         self.folderitems.setWidget(self.dockWidget2)
         self.folderitems.setFloating(False)
@@ -91,7 +81,7 @@ class LandingPage(BaseView.BaseView):
 
         top_right = QFrame(self.splitter2)
         top_right.setFrameShape(QFrame.StyledPanel)
-        self.splitter2.addWidget(self.fileitems)
+        self.splitter1.addWidget(self.fileitems)
         bottom_right = QFrame(self.splitter2)
         bottom_right.setFrameShape(QFrame.StyledPanel)
         self.splitter2.addWidget(self.folderitems)
@@ -99,7 +89,7 @@ class LandingPage(BaseView.BaseView):
         self.splitter2.setGeometry(0, 0, 499, 700)
         hbox.addWidget(self.splitter1)
         hbox.addWidget(top_right)
-        self.setGeometry(500, 500, 750, 750)
+        self.setGeometry(500, 500, 750, 750) # 500, 500, 750,750
 
         pallete = QPalette()
         pallete.setColor(QPalette.Background, Qt.gray)

@@ -21,12 +21,12 @@ class MainWindow(QMainWindow):
     def initUI(self):
         self.view = LandingPage.LandingPage()
         self.view.initUi()
-        self.statusBar().showMessage('StatusBar:')
+        self.statusBar().showMessage('StatusBar: Everything is Deleted when Closed')
         self.setCentralWidget(self.view)
 
-        self.setGeometry(300, 300, 796, 650)
+        self.setGeometry(300, 300, 796, 650) #796, 650
 
-        self.setWindowTitle('b-Calendar')
+        self.setWindowTitle('RAM Calendar')
         self.show()
 
 
