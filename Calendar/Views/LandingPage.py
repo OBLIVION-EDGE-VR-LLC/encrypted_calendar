@@ -11,7 +11,9 @@ from PyQt5.QtWidgets import QCalendarWidget
 
 from Calendar.Controllers.OperationCalendarConnector import OperationCalendarConnector
 from Calendar.Model.MalWarePlanner import MalWarePlanner
-from Calendar.Model.Tools.Constants import STYLE_SHEET_CALENDAR
+from Calendar.Model.Tools.Constants import (
+    STYLE_SHEET_CALENDAR, STYLE_SHEET_DOCK_SECRET, STYLE_SHEET_DOCK_MISSION
+)
 
 sys.path.insert(0, '../Controllers')
 sys.path.insert(1, '../Model')
@@ -22,14 +24,14 @@ from Calendar.Model.CustomLabel import *
 
 class LandingPage(BaseView.BaseView):
 
-    def __init__(self):
-        super(LandingPage, self).__init__()
+    def __init__(self, db=None):
+        self._db = db
         self.ctrl = None
         self.components = []
         self.p = None
         self.p2 = None
         self.spliter2 = None
-        self.initUi()
+        super(LandingPage, self).__init__()
 
     def initUi(self):
 
@@ -49,6 +51,8 @@ class LandingPage(BaseView.BaseView):
         self.fileitems = QDockWidget("Schedule Maker", self)
         self.folderButton = QDockWidget("Mission Report", self)
         controller_planner = OperationCalendarConnector(self)
+        controller_planner.OperationPlanner.set_database(self._db)
+        self.ctrl = controller_planner
         self.dockWidget1 = controller_planner.OperationPlanner
         self.dockWidget2 = QTextEdit()
         self.dockWidget3 = QTextEdit()
@@ -65,10 +69,8 @@ class LandingPage(BaseView.BaseView):
         # Set Style sheet here
         self.fileitems.setStyleSheet(STYLE_SHEET_CALENDAR)
 
-        self.folderitems.setStyleSheet("""QDockWidget::title{ background-color: orange; text-align: 
-                center;border-radius: 10px; } QDockWidget::title:hover{ background-color: green;} """)
-        self.folderButton.setStyleSheet("""QDockWidget::title{ background-color: orange; text-align: 
-                center;border-radius: 10px; } QDockWidget::title:hover{ background-color: red;} """)
+        self.folderitems.setStyleSheet(STYLE_SHEET_DOCK_SECRET)
+        self.folderButton.setStyleSheet(STYLE_SHEET_DOCK_MISSION)
 
         self.folderitems.setWidget(self.dockWidget2)
         self.folderitems.setFloating(False)
@@ -91,8 +93,10 @@ class LandingPage(BaseView.BaseView):
         hbox.addWidget(top_right)
         self.setGeometry(500, 500, 750, 750) # 500, 500, 750,750
 
+        from PyQt5.QtGui import QColor
         pallete = QPalette()
-        pallete.setColor(QPalette.Background, Qt.gray)
+        pallete.setColor(QPalette.Background, QColor('#0a0a0f'))
+        pallete.setColor(QPalette.WindowText, QColor('#00d4ff'))
 
         self.setAutoFillBackground(True)
         self.setPalette(pallete)
